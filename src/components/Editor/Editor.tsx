@@ -27,7 +27,12 @@ function Editor(props: EditorProps) {
     return (
         <>
             <input type="number" value={editorData.borderWidth} onChange={onBorderWidthChange} />
-            <Canvas borderWidth={editorData.borderWidth} borderColor={editorData.borderColor} />
+            <Canvas 
+                id='canvas' 
+                viewportHeight={50} 
+                borderWidth={editorData.borderWidth} 
+                borderColor={editorData.borderColor} 
+            />
         </>
     );
 }

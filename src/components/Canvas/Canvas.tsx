@@ -1,14 +1,15 @@
-import './Canvas.css';
 import horizontalSample from "./../../assets/horizontal_sample.jpeg"
 
 interface CanvasProps {
+    id: string;
+    viewportHeight: number;
     borderWidth: number;
     borderColor: number;
 }
 
 function Canvas(props: CanvasProps) {
     return (
-        <div id="canvas">
+        <div id={props.id} style={getCanvasStyle(props)}>
             <img 
                 src={horizontalSample} 
                 alt=""
@@ -18,12 +19,26 @@ function Canvas(props: CanvasProps) {
     );
 }
 
+function getCanvasStyle(props: CanvasProps) {
+    return {
+        height: props.viewportHeight.toString() + 'vw',
+        backgroundColor: 'grey',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    };
+}
+
 function getImageStyle(props:  CanvasProps) {
     return {
-        borderStyle: 'solid',
-        borderWidth: getBorderWidthValue(props.borderWidth),
-        borderColor: getBorderColorValue(props.borderColor)
+        maxWidth: '100%',
+        maxHeight: '100%'
     };
+    // return {
+    //     borderStyle: 'solid',
+    //     borderWidth: getBorderWidthValue(props.borderWidth),
+    //     borderColor: getBorderColorValue(props.borderColor)
+    // };
 }
 
 function getBorderWidthValue(value: number) {
