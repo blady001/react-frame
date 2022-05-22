@@ -1,18 +1,18 @@
 import { formatAsPercentage, formatAsVw } from "../../modules/formattingUtils";
-import horizontalSample from "./../../assets/vertical_sample.jpeg"
 
 interface CanvasProps {
-    id: string;
-    viewportHeightToWidthPercentage: number;
-    borderSize: number;
-    borderColor: string;
+    id: string,
+    viewportHeightToWidthPercentage: number,
+    borderSize: number,
+    borderColor: string,
+    imageUrl: string
 }
 
 function Canvas(props: CanvasProps) {
     return (
         <div id={props.id} style={getCanvasStyle(props)}>
             <img
-                src={horizontalSample}
+                src={props.imageUrl}
                 alt=""
                 style={getImageStyle(props)}
             />

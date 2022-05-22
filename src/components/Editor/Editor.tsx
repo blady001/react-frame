@@ -15,7 +15,8 @@ interface EditorState {
     selectedFrameSize: number,  // as percentage of canvas height (size)
     selectedColor: string,
     editorOrientation: Orientation,
-    showColorPicker: boolean
+    showColorPicker: boolean,
+    imageUrl?: string
 }
 
 function Editor(props: EditorProps) {
@@ -23,7 +24,7 @@ function Editor(props: EditorProps) {
         selectedFrameSize: 0,
         selectedColor: '#ff8c00',
         editorOrientation: getDeviceOrientation(),
-        showColorPicker: false
+        showColorPicker: false,
     });
 
     const onSliderChange = (value: number | number[]) => {
@@ -37,6 +38,12 @@ function Editor(props: EditorProps) {
 
     const onColorChange = (value: string) => {
         setEditorState({ ...editorState, selectedColor: value })
+    };
+
+    const onImageChange = (value: any) => {
+        const [file] = value.target.files;
+        const imageUrl = URL.createObjectURL(file);
+        setEditorState({ ...editorState, imageUrl: imageUrl });
     };
 
     // @ts-ignore
@@ -58,12 +65,16 @@ function Editor(props: EditorProps) {
 
     return (
         <div id='editor'>
-            <Canvas
-                id='canvas'
-                viewportHeightToWidthPercentage={getCanvasSize(editorState.editorOrientation)}
-                borderSize={editorState.selectedFrameSize}
-                borderColor={editorState.selectedColor}
-            />
+            {editorState.imageUrl === undefined ? null :
+                <Canvas
+                    id='canvas'
+                    viewportHeightToWidthPercentage={getCanvasSize(editorState.editorOrientation)}
+                    borderSize={editorState.selectedFrameSize}
+                    borderColor={editorState.selectedColor}
+                    imageUrl={editorState.imageUrl}
+                />
+            }
+            <input type='file' onChange={onImageChange} />
             <Slider
                 min={0}
                 max={10}
