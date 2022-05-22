@@ -1,4 +1,5 @@
-import horizontalSample from "./../../assets/horizontal_sample.jpeg"
+import { formatAsHexStr, formatAsPercentage, formatAsVw } from "../../modules/formattingUtils";
+import horizontalSample from "./../../assets/vertical_sample.jpeg"
 
 interface CanvasProps {
     id: string;
@@ -40,18 +41,6 @@ function getImageStyle(props:  CanvasProps) {
         borderWidth: formatAsVw(borderSize),
         borderColor: formatAsHexStr(props.borderColor)
     };
-}
-
-function formatAsPercentage(value: number): string {
-    return value.toString() + '%';
-}
-
-function formatAsVw(value: number): string {
-    return value.toString() + 'vw';
-}
-
-function formatAsHexStr(value: number): string {
-    return '#' + value.toString(16);
 }
 
 function calculateImageMaxHeightPercentage(props: CanvasProps): number {
