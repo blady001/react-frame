@@ -1,6 +1,6 @@
 import { formatAsPercentage, formatAsVw } from "../../modules/formattingUtils";
 
-interface CanvasProps {
+interface DisplayCanvasProps {
     id: string,
     viewportHeightToWidthPercentage: number,
     borderSize: number,
@@ -8,9 +8,9 @@ interface CanvasProps {
     imageUrl: string
 }
 
-function Canvas(props: CanvasProps) {
+function DisplayCanvas(props: DisplayCanvasProps) {
     return (
-        <div id={props.id} style={getCanvasStyle(props)}>
+        <div id={props.id} style={getDisplayCanvasStyle(props)}>
             <img
                 src={props.imageUrl}
                 alt=""
@@ -20,7 +20,7 @@ function Canvas(props: CanvasProps) {
     );
 }
 
-function getCanvasStyle(props: CanvasProps) {
+function getDisplayCanvasStyle(props: DisplayCanvasProps) {
     return {
         height: formatAsVw(props.viewportHeightToWidthPercentage),
         backgroundColor: 'grey',
@@ -30,7 +30,7 @@ function getCanvasStyle(props: CanvasProps) {
     };
 }
 
-function getImageStyle(props: CanvasProps) {
+function getImageStyle(props: DisplayCanvasProps) {
     let imageMaxSize = calculateImageMaxHeightPercentage(props);
     let borderSize = calculateBorderSize(props);
     // console.log("Border size: " + borderSize.toString() + '%');
@@ -43,12 +43,12 @@ function getImageStyle(props: CanvasProps) {
     };
 }
 
-function calculateImageMaxHeightPercentage(props: CanvasProps): number {
+function calculateImageMaxHeightPercentage(props: DisplayCanvasProps): number {
     return 100 - (props.borderSize * 2);
 }
 
-function calculateBorderSize(props: CanvasProps): number {
+function calculateBorderSize(props: DisplayCanvasProps): number {
     return props.borderSize / 100 * props.viewportHeightToWidthPercentage;
 }
 
-export default Canvas;
+export default DisplayCanvas;

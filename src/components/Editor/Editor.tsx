@@ -1,5 +1,5 @@
 import './Editor.css';
-import Canvas from '../Canvas/Canvas';
+import DisplayCanvas from '../Canvas/DisplayCanvas';
 import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -66,9 +66,9 @@ function Editor(props: EditorProps) {
     return (
         <div id='editor'>
             {editorState.imageUrl === undefined ? null :
-                <Canvas
-                    id='canvas'
-                    viewportHeightToWidthPercentage={getCanvasSize(editorState.editorOrientation)}
+                <DisplayCanvas
+                    id='display-canvas'
+                    viewportHeightToWidthPercentage={getDisplayCanvasSize(editorState.editorOrientation)}
                     borderSize={editorState.selectedFrameSize}
                     borderColor={editorState.selectedColor}
                     imageUrl={editorState.imageUrl}
@@ -94,7 +94,7 @@ function Editor(props: EditorProps) {
     );
 }
 
-function getCanvasSize(orientation: Orientation): number {
+function getDisplayCanvasSize(orientation: Orientation): number {
     return orientation === Orientation.Horizontal ? 50 : 80;
 }
 
