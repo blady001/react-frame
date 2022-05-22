@@ -1,8 +1,10 @@
+import './Editor.css';
 import Canvas from '../Canvas/Canvas';
 import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
+import ColorPicker from '../ColorPicker/ColorPicker';
 
 
 interface EditorProps {
@@ -10,28 +12,38 @@ interface EditorProps {
 }
 
 interface EditorState {
-    borderSize: number,  // as percentage of canvas height (size)
-    borderColor: number,
-    editorOrientation: Orientation
+    selectedFrameSize: number,  // as percentage of canvas height (size)
+    selectedColor: string,
+    editorOrientation: Orientation,
+    showColorPicker: boolean
 }
 
 function Editor(props: EditorProps) {
     const [editorData, setEditorData] = useState<EditorState>({
-        borderSize: 0,
-        borderColor: 0xff8c00,
-        editorOrientation: getDeviceOrientation()
+        selectedFrameSize: 0,
+        selectedColor: '#ff8c00',
+        editorOrientation: getDeviceOrientation(),
+        showColorPicker: false
     });
 
     const onSliderChange = (value: number | number[]) => {
         // console.log('Slider value: ' + value);
-        setEditorData({...editorData, borderSize: value as number});
-    }
+        setEditorData({...editorData, selectedFrameSize: value as number});
+    };
+
+    const toggleColorPicker = () => {
+        setEditorData({...editorData, showColorPicker: !editorData.showColorPicker});
+    };
+
+    const onColorChange = (value: string) => {
+        setEditorData({...editorData, selectedColor: value})
+    };
 
     // @ts-ignore
     useEffect(() => {
         const resizeHandler = () => {
             let currentOrientation = getDeviceOrientation();
-            console.log(currentOrientation);
+            // console.log(currentOrientation);
             if (currentOrientation !== editorData.editorOrientation) {
                 setEditorData({...editorData, editorOrientation: currentOrientation})
             }
@@ -46,19 +58,27 @@ function Editor(props: EditorProps) {
 
     return (
         <div id='editor'>
-            <Slider 
-                min={0}
-                max={10}
-                defaultValue={editorData.borderSize}
-                onChange={onSliderChange}
-                style={{maxWidth: '50vw', margin: '0 auto'}}
-            />
             <Canvas 
                 id='canvas' 
                 viewportHeightToWidthPercentage={getCanvasSize(editorData.editorOrientation)} 
-                borderSize={editorData.borderSize} 
-                borderColor={editorData.borderColor} 
+                borderSize={editorData.selectedFrameSize} 
+                borderColor={editorData.selectedColor} 
             />
+            <Slider 
+                min={0}
+                max={10}
+                defaultValue={editorData.selectedFrameSize}
+                onChange={onSliderChange}
+                style={{maxWidth: '50vw', margin: '0 auto'}}
+            />
+            <button onClick={toggleColorPicker}>Color</button>
+            { editorData.showColorPicker ? 
+                <ColorPicker 
+                    color={editorData.selectedColor}
+                    onDismiss={toggleColorPicker} 
+                    onColorChange={onColorChange} 
+                /> 
+            : null }
         </div>
     );
 }

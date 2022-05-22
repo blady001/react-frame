@@ -1,11 +1,11 @@
-import { formatAsHexStr, formatAsPercentage, formatAsVw } from "../../modules/formattingUtils";
+import { formatAsPercentage, formatAsVw } from "../../modules/formattingUtils";
 import horizontalSample from "./../../assets/vertical_sample.jpeg"
 
 interface CanvasProps {
     id: string;
     viewportHeightToWidthPercentage: number;
     borderSize: number;
-    borderColor: number;
+    borderColor: string;
 }
 
 function Canvas(props: CanvasProps) {
@@ -39,7 +39,7 @@ function getImageStyle(props:  CanvasProps) {
         maxHeight: formatAsPercentage(imageMaxSize),
         borderStyle: 'solid',
         borderWidth: formatAsVw(borderSize),
-        borderColor: formatAsHexStr(props.borderColor)
+        borderColor: props.borderColor
     };
 }
 
