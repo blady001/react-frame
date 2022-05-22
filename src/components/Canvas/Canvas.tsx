@@ -11,10 +11,10 @@ interface CanvasProps {
 function Canvas(props: CanvasProps) {
     return (
         <div id={props.id} style={getCanvasStyle(props)}>
-            <img 
-                src={horizontalSample} 
+            <img
+                src={horizontalSample}
                 alt=""
-                style={getImageStyle(props)} 
+                style={getImageStyle(props)}
             />
         </div>
     );
@@ -30,7 +30,7 @@ function getCanvasStyle(props: CanvasProps) {
     };
 }
 
-function getImageStyle(props:  CanvasProps) {
+function getImageStyle(props: CanvasProps) {
     let imageMaxSize = calculateImageMaxHeightPercentage(props);
     let borderSize = calculateBorderSize(props);
     // console.log("Border size: " + borderSize.toString() + '%');

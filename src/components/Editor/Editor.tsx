@@ -28,15 +28,15 @@ function Editor(props: EditorProps) {
 
     const onSliderChange = (value: number | number[]) => {
         // console.log('Slider value: ' + value);
-        setEditorData({...editorData, selectedFrameSize: value as number});
+        setEditorData({ ...editorData, selectedFrameSize: value as number });
     };
 
     const toggleColorPicker = () => {
-        setEditorData({...editorData, showColorPicker: !editorData.showColorPicker});
+        setEditorData({ ...editorData, showColorPicker: !editorData.showColorPicker });
     };
 
     const onColorChange = (value: string) => {
-        setEditorData({...editorData, selectedColor: value})
+        setEditorData({ ...editorData, selectedColor: value })
     };
 
     // @ts-ignore
@@ -45,12 +45,12 @@ function Editor(props: EditorProps) {
             let currentOrientation = getDeviceOrientation();
             // console.log(currentOrientation);
             if (currentOrientation !== editorData.editorOrientation) {
-                setEditorData({...editorData, editorOrientation: currentOrientation})
+                setEditorData({ ...editorData, editorOrientation: currentOrientation })
             }
         };
 
         window.addEventListener('resize', resizeHandler);
-        
+
         return (_: any) => {
             window.removeEventListener('resize', resizeHandler);
         };
@@ -58,27 +58,27 @@ function Editor(props: EditorProps) {
 
     return (
         <div id='editor'>
-            <Canvas 
-                id='canvas' 
-                viewportHeightToWidthPercentage={getCanvasSize(editorData.editorOrientation)} 
-                borderSize={editorData.selectedFrameSize} 
-                borderColor={editorData.selectedColor} 
+            <Canvas
+                id='canvas'
+                viewportHeightToWidthPercentage={getCanvasSize(editorData.editorOrientation)}
+                borderSize={editorData.selectedFrameSize}
+                borderColor={editorData.selectedColor}
             />
-            <Slider 
+            <Slider
                 min={0}
                 max={10}
                 defaultValue={editorData.selectedFrameSize}
                 onChange={onSliderChange}
-                style={{maxWidth: '50vw', margin: '0 auto'}}
+                style={{ maxWidth: '50vw', margin: '0 auto' }}
             />
             <button onClick={toggleColorPicker}>Color</button>
-            { editorData.showColorPicker ? 
-                <ColorPicker 
+            {editorData.showColorPicker ?
+                <ColorPicker
                     color={editorData.selectedColor}
-                    onDismiss={toggleColorPicker} 
-                    onColorChange={onColorChange} 
-                /> 
-            : null }
+                    onDismiss={toggleColorPicker}
+                    onColorChange={onColorChange}
+                />
+                : null}
         </div>
     );
 }
