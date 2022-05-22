@@ -5,7 +5,10 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
 import ColorPicker from '../ColorPicker/ColorPicker';
+import { createImageWithBorder } from '../../modules/imageManipulation';
 
+
+const DISPLAY_CANVAS_ID = 'display-canvas';
 
 interface EditorProps {
 
@@ -46,6 +49,13 @@ function Editor(props: EditorProps) {
         setEditorState({ ...editorState, imageUrl: imageUrl });
     };
 
+    const onDownload = () => {
+        let imgUrl: string = createImageWithBorder(getImgElement(), editorState.selectedFrameSize, editorState.selectedColor);
+        download(imgUrl, generateFilename('jpeg'));
+    }
+    
+    const getImgElement = (): HTMLImageElement => document.getElementById(DISPLAY_CANVAS_ID)!.getElementsByTagName('img')[0];
+
     // @ts-ignore
     useEffect(() => {
         const resizeHandler = () => {
@@ -67,7 +77,7 @@ function Editor(props: EditorProps) {
         <div id='editor'>
             {editorState.imageUrl === undefined ? null :
                 <DisplayCanvas
-                    id='display-canvas'
+                    id={DISPLAY_CANVAS_ID}
                     viewportHeightToWidthPercentage={getDisplayCanvasSize(editorState.editorOrientation)}
                     borderSize={editorState.selectedFrameSize}
                     borderColor={editorState.selectedColor}
@@ -83,6 +93,7 @@ function Editor(props: EditorProps) {
                 style={{ maxWidth: '50vw', margin: '0 auto' }}
             />
             <button onClick={toggleColorPicker}>Color</button>
+            <button onClick={onDownload}>Download</button>
             {editorState.showColorPicker ?
                 <ColorPicker
                     color={editorState.selectedColor}
@@ -95,7 +106,19 @@ function Editor(props: EditorProps) {
 }
 
 function getDisplayCanvasSize(orientation: Orientation): number {
-    return orientation === Orientation.Horizontal ? 50 : 80;
+    return 50; // TODO: fix
+    // return orientation === Orientation.Horizontal ? 50 : 80;
+}
+
+function download(url: string, filename: string) {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+}
+
+function generateFilename(extension: string): string {
+    return Date.now().toString() + '.' + extension;
 }
 
 export default Editor;
