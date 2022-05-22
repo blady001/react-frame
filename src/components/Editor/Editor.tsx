@@ -19,7 +19,7 @@ interface EditorState {
 }
 
 function Editor(props: EditorProps) {
-    const [editorData, setEditorData] = useState<EditorState>({
+    const [editorState, setEditorState] = useState<EditorState>({
         selectedFrameSize: 0,
         selectedColor: '#ff8c00',
         editorOrientation: getDeviceOrientation(),
@@ -28,15 +28,15 @@ function Editor(props: EditorProps) {
 
     const onSliderChange = (value: number | number[]) => {
         // console.log('Slider value: ' + value);
-        setEditorData({ ...editorData, selectedFrameSize: value as number });
+        setEditorState({ ...editorState, selectedFrameSize: value as number });
     };
 
     const toggleColorPicker = () => {
-        setEditorData({ ...editorData, showColorPicker: !editorData.showColorPicker });
+        setEditorState({ ...editorState, showColorPicker: !editorState.showColorPicker });
     };
 
     const onColorChange = (value: string) => {
-        setEditorData({ ...editorData, selectedColor: value })
+        setEditorState({ ...editorState, selectedColor: value })
     };
 
     // @ts-ignore
@@ -44,8 +44,8 @@ function Editor(props: EditorProps) {
         const resizeHandler = () => {
             let currentOrientation = getDeviceOrientation();
             // console.log(currentOrientation);
-            if (currentOrientation !== editorData.editorOrientation) {
-                setEditorData({ ...editorData, editorOrientation: currentOrientation })
+            if (currentOrientation !== editorState.editorOrientation) {
+                setEditorState({ ...editorState, editorOrientation: currentOrientation })
             }
         };
 
@@ -60,21 +60,21 @@ function Editor(props: EditorProps) {
         <div id='editor'>
             <Canvas
                 id='canvas'
-                viewportHeightToWidthPercentage={getCanvasSize(editorData.editorOrientation)}
-                borderSize={editorData.selectedFrameSize}
-                borderColor={editorData.selectedColor}
+                viewportHeightToWidthPercentage={getCanvasSize(editorState.editorOrientation)}
+                borderSize={editorState.selectedFrameSize}
+                borderColor={editorState.selectedColor}
             />
             <Slider
                 min={0}
                 max={10}
-                defaultValue={editorData.selectedFrameSize}
+                defaultValue={editorState.selectedFrameSize}
                 onChange={onSliderChange}
                 style={{ maxWidth: '50vw', margin: '0 auto' }}
             />
             <button onClick={toggleColorPicker}>Color</button>
-            {editorData.showColorPicker ?
+            {editorState.showColorPicker ?
                 <ColorPicker
-                    color={editorData.selectedColor}
+                    color={editorState.selectedColor}
                     onDismiss={toggleColorPicker}
                     onColorChange={onColorChange}
                 />
