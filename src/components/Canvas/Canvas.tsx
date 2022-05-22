@@ -2,8 +2,8 @@ import horizontalSample from "./../../assets/horizontal_sample.jpeg"
 
 interface CanvasProps {
     id: string;
-    viewportHeight: number;
-    borderWidth: number;
+    viewportHeightToWidthPercentage: number;
+    borderSize: number;
     borderColor: number;
 }
 
@@ -21,7 +21,7 @@ function Canvas(props: CanvasProps) {
 
 function getCanvasStyle(props: CanvasProps) {
     return {
-        height: props.viewportHeight.toString() + 'vw',
+        height: formatAsVw(props.viewportHeightToWidthPercentage),
         backgroundColor: 'grey',
         display: 'flex',
         justifyContent: 'center',
@@ -30,23 +30,36 @@ function getCanvasStyle(props: CanvasProps) {
 }
 
 function getImageStyle(props:  CanvasProps) {
+    let imageMaxSize = calculateImageMaxHeightPercentage(props);
+    let borderSize = calculateBorderSize(props);
+    // console.log("Border size: " + borderSize.toString() + '%');
     return {
-        maxWidth: '100%',
-        maxHeight: '100%'
+        maxWidth: formatAsPercentage(imageMaxSize),
+        maxHeight: formatAsPercentage(imageMaxSize),
+        borderStyle: 'solid',
+        borderWidth: formatAsVw(borderSize),
+        borderColor: formatAsHexStr(props.borderColor)
     };
-    // return {
-    //     borderStyle: 'solid',
-    //     borderWidth: getBorderWidthValue(props.borderWidth),
-    //     borderColor: getBorderColorValue(props.borderColor)
-    // };
 }
 
-function getBorderWidthValue(value: number) {
-    return (value * 0.1).toString() + 'vw';
+function formatAsPercentage(value: number): string {
+    return value.toString() + '%';
 }
 
-function getBorderColorValue(numericColor: number) {
-    return '#' + numericColor.toString(16);
+function formatAsVw(value: number): string {
+    return value.toString() + 'vw';
+}
+
+function formatAsHexStr(value: number): string {
+    return '#' + value.toString(16);
+}
+
+function calculateImageMaxHeightPercentage(props: CanvasProps): number {
+    return 100 - (props.borderSize * 2);
+}
+
+function calculateBorderSize(props: CanvasProps): number {
+    return props.borderSize / 100 * props.viewportHeightToWidthPercentage;
 }
 
 export default Canvas;

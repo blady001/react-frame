@@ -1,39 +1,45 @@
-import './Editor.css'
 import Canvas from '../Canvas/Canvas';
 import React, { useState } from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 
 interface EditorProps {
 
 }
 
 interface EditorState {
-    borderWidth: number,
+    borderSize: number,  // as percentage of canvas height
     borderColor: number
 }
 
 function Editor(props: EditorProps) {
     const [editorData, setEditorData] = useState<EditorState>({
-        borderWidth: 10,
+        borderSize: 0,
         borderColor: 0xff8c00
     });
 
-    const onBorderWidthChange = (e: React.FormEvent<HTMLInputElement>) => {
-        console.log('VALUE: ' + e.currentTarget.value.toString());
-        // TODO: fix it
-        let width: number = e.currentTarget.value === undefined ? 0 : parseInt(e.currentTarget.value);
-        setEditorData({...editorData, borderWidth: width});
+    const onSliderChange = (value: number | number[]) => {
+        // console.log('Slider value: ' + value);
+        setEditorData({...editorData, borderSize: value as number});
     }
 
     return (
-        <>
-            <input type="number" value={editorData.borderWidth} onChange={onBorderWidthChange} />
+        <div id='editor'>
+            <Slider 
+                min={0}
+                max={10}
+                defaultValue={editorData.borderSize}
+                onChange={onSliderChange}
+                style={{maxWidth: '50vw', margin: '0 auto'}}
+            />
             <Canvas 
                 id='canvas' 
-                viewportHeight={50} 
-                borderWidth={editorData.borderWidth} 
+                viewportHeightToWidthPercentage={50} 
+                borderSize={editorData.borderSize} 
                 borderColor={editorData.borderColor} 
             />
-        </>
+        </div>
     );
 }
 
