@@ -8,8 +8,6 @@ import ColorPicker from '../ColorPicker/ColorPicker';
 import { createImageWithBorder } from '../../modules/imageManipulation';
 
 
-const DISPLAY_CANVAS_ID = 'display-canvas';
-
 interface EditorProps {
 
 }
@@ -50,11 +48,9 @@ function Editor(props: EditorProps) {
     };
 
     const onDownload = () => {
-        let imgUrl: string = createImageWithBorder(getImgElement(), editorState.selectedFrameSize, editorState.selectedColor);
+        let imgUrl: string = createImageWithBorder(editorState.selectedFrameSize, editorState.selectedColor);
         download(imgUrl, generateFilename('jpeg'));
     }
-    
-    const getImgElement = (): HTMLImageElement => document.getElementById(DISPLAY_CANVAS_ID)!.getElementsByTagName('img')[0];
 
     // @ts-ignore
     useEffect(() => {
@@ -73,41 +69,52 @@ function Editor(props: EditorProps) {
         };
     });
 
+    const isOrientationHorizontal = () => editorState.editorOrientation === Orientation.Horizontal;
+
+    const getUnit = () => isOrientationHorizontal() ? 'vh' : 'vw';
+
+    const getEditorFlexDirection = () => {
+        if (isOrientationHorizontal()) {
+            return { flexDirection: 'row' as 'row' };
+        } else {
+            return { flexDirection: 'column' as 'column' };
+        } 
+    }
+
     return (
-        <div id='editor'>
-            {editorState.imageUrl === undefined ? null :
-                <DisplayCanvas
-                    id={DISPLAY_CANVAS_ID}
-                    viewportHeightToWidthPercentage={getDisplayCanvasSize(editorState.editorOrientation)}
-                    borderSize={editorState.selectedFrameSize}
-                    borderColor={editorState.selectedColor}
-                    imageUrl={editorState.imageUrl}
+        <div className='container' style={getEditorFlexDirection()}>
+            <div>
+                {editorState.imageUrl === undefined ? null :
+                    <DisplayCanvas
+                        resizeReferenceUnit={getUnit()}
+                        scale={0.8}
+                        borderSize={editorState.selectedFrameSize}
+                        borderColor={editorState.selectedColor}
+                        imageUrl={editorState.imageUrl}
+                    />
+                }
+            </div>
+            <div>
+                <input type='file' onChange={onImageChange} />
+                <Slider
+                    min={0}
+                    max={10}
+                    defaultValue={editorState.selectedFrameSize}
+                    onChange={onSliderChange}
+                    style={{ maxWidth: '50vw', margin: '0 auto' }}
                 />
-            }
-            <input type='file' onChange={onImageChange} />
-            <Slider
-                min={0}
-                max={10}
-                defaultValue={editorState.selectedFrameSize}
-                onChange={onSliderChange}
-                style={{ maxWidth: '50vw', margin: '0 auto' }}
-            />
-            <button onClick={toggleColorPicker}>Color</button>
-            <button onClick={onDownload}>Download</button>
-            {editorState.showColorPicker ?
-                <ColorPicker
-                    color={editorState.selectedColor}
-                    onDismiss={toggleColorPicker}
-                    onColorChange={onColorChange}
-                />
-                : null}
+                <button onClick={toggleColorPicker}>Color</button>
+                <button onClick={onDownload}>Download</button>
+                {editorState.showColorPicker ?
+                    <ColorPicker
+                        color={editorState.selectedColor}
+                        onDismiss={toggleColorPicker}
+                        onColorChange={onColorChange}
+                    />
+                    : null}
+            </div>
         </div>
     );
-}
-
-function getDisplayCanvasSize(orientation: Orientation): number {
-    return 50; // TODO: fix
-    // return orientation === Orientation.Horizontal ? 50 : 80;
 }
 
 function download(url: string, filename: string) {

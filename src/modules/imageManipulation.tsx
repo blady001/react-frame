@@ -1,11 +1,19 @@
-export function createImageWithBorder(imgElement: HTMLImageElement, frameSize: number, color: string): string {
-    const imgPxWidth = imgElement.naturalWidth;
-    const imgPxHeight = imgElement.naturalHeight
-    const borderPxSize = frameSize * imgPxHeight / 100;
-    // console.log('Img size: ' + imgPxWidth + 'x' + imgPxHeight + ' | Border size: ' + borderPxSize);
+export function createImageWithBorder(frameSize: number, frameColor: string): string {
+    const canvasElement = document.getElementById('display-canvas') as HTMLElement;
+    const imgElement = document.getElementById('display-canvas-img') as HTMLImageElement;
 
-    let canvasWidth = imgPxWidth + 2 * borderPxSize;
-    let canvasHeight = imgPxHeight + 2 * borderPxSize;
+    const referenceSize = canvasElement.scrollHeight;
+    const imgHeightScaled = imgElement.height;
+    const imgWidthScaled = imgElement.width;
+    const imgHeightPx = imgElement.naturalHeight;
+    const imgWidthPx = imgElement.naturalWidth;
+    const borderPxScaled = frameSize * referenceSize / 100;
+    const borderPx = Math.max(imgHeightPx, imgWidthPx) * borderPxScaled / Math.max(imgHeightScaled, imgWidthScaled);
+
+    // console.log('Img size: ' + imgWidthPx + 'x' + imgHeightPx + ' | Border size: ' + borderPx);
+
+    let canvasWidth = imgWidthPx + 2 * borderPx;
+    let canvasHeight = imgHeightPx + 2 * borderPx;
 
     let img = new Image();
     img.src = imgElement.src;
@@ -14,9 +22,9 @@ export function createImageWithBorder(imgElement: HTMLImageElement, frameSize: n
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     let ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = color;
+    ctx.fillStyle = frameColor;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, borderPxSize, borderPxSize);
+    ctx.drawImage(img, borderPx, borderPx);
 
     return canvas.toDataURL('image/jpeg', 0.8);
 }
