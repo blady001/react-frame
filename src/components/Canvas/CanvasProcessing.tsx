@@ -1,5 +1,7 @@
-export function createImageWithBorder(): string {
-    const imgElement = document.getElementById('display-canvas-img') as HTMLImageElement;
+import { CANVAS_IMG_ELEMENT_ID } from "./Canvas";
+
+export function produceNewImage(): string {
+    const imgElement = document.getElementById(CANVAS_IMG_ELEMENT_ID) as HTMLImageElement;
     const imgComputedStyle = getComputedStyle(imgElement);
 
     const imgVisibleHeight = parseFloat(imgComputedStyle.height);

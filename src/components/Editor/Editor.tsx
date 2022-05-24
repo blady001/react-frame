@@ -1,11 +1,11 @@
 import './Editor.css';
-import DisplayCanvas from '../Canvas/DisplayCanvas';
+import Canvas, { ReferenceDimension } from '../Canvas/Canvas';
 import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
 import ColorPicker from '../ColorPicker/ColorPicker';
-import { createImageWithBorder } from '../../modules/imageManipulation';
+import { produceNewImage } from '../Canvas/CanvasProcessing';
 
 
 interface EditorProps {
@@ -48,7 +48,7 @@ function Editor(props: EditorProps) {
     };
 
     const onDownload = () => {
-        let imgUrl: string = createImageWithBorder();
+        let imgUrl: string = produceNewImage();
         download(imgUrl, generateFilename('jpeg'));
     }
 
@@ -71,23 +71,22 @@ function Editor(props: EditorProps) {
 
     const isOrientationHorizontal = () => editorState.editorOrientation === Orientation.Horizontal;
 
-    const getUnit = () => isOrientationHorizontal() ? 'vh' : 'vw';
+    const getCanvasReferenceDimension = () => isOrientationHorizontal() ? ReferenceDimension.Height : ReferenceDimension.Width;
 
     const getEditorFlexDirection = () => {
         if (isOrientationHorizontal()) {
             return { flexDirection: 'row' as 'row' };
         } else {
             return { flexDirection: 'column' as 'column' };
-        } 
+        }
     }
 
     return (
         <div className='container' style={getEditorFlexDirection()}>
             <div>
                 {editorState.imageUrl === undefined ? null :
-                    <DisplayCanvas
-                        resizeReferenceUnit={getUnit()}
-                        scale={0.8}
+                    <Canvas
+                        referenceDimension={getCanvasReferenceDimension()}
                         borderSize={editorState.selectedFrameSize}
                         borderColor={editorState.selectedColor}
                         imageUrl={editorState.imageUrl}
