@@ -1,19 +1,17 @@
-export function createImageWithBorder(frameSize: number, frameColor: string): string {
-    const canvasElement = document.getElementById('display-canvas') as HTMLElement;
+export function createImageWithBorder(): string {
     const imgElement = document.getElementById('display-canvas-img') as HTMLImageElement;
+    const imgComputedStyle = getComputedStyle(imgElement);
 
-    const referenceSize = canvasElement.scrollHeight;
-    const imgHeightScaled = imgElement.height;
-    const imgWidthScaled = imgElement.width;
-    const imgHeightPx = imgElement.naturalHeight;
-    const imgWidthPx = imgElement.naturalWidth;
-    const borderPxScaled = frameSize * referenceSize / 100;
-    const borderPx = Math.max(imgHeightPx, imgWidthPx) * borderPxScaled / Math.max(imgHeightScaled, imgWidthScaled);
+    const imgVisibleHeight = parseFloat(imgComputedStyle.height);
+    const imgVisibleWidth = parseFloat(imgComputedStyle.width);
+    const imgRealHeight = imgElement.naturalHeight;
+    const imgRealWidth = imgElement.naturalWidth;
 
-    // console.log('Img size: ' + imgWidthPx + 'x' + imgHeightPx + ' | Border size: ' + borderPx);
+    const borderVisibleSize = parseFloat(imgComputedStyle.borderWidth);
+    const borderRealSize = Math.max(imgRealHeight, imgRealWidth) * borderVisibleSize / Math.max(imgVisibleHeight, imgVisibleWidth);
 
-    let canvasWidth = imgWidthPx + 2 * borderPx;
-    let canvasHeight = imgHeightPx + 2 * borderPx;
+    let canvasWidth = imgRealWidth + 2 * borderRealSize;
+    let canvasHeight = imgRealHeight + 2 * borderRealSize;
 
     let img = new Image();
     img.src = imgElement.src;
@@ -22,9 +20,9 @@ export function createImageWithBorder(frameSize: number, frameColor: string): st
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     let ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = frameColor;
+    ctx.fillStyle = imgComputedStyle.borderColor;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(img, borderPx, borderPx);
+    ctx.drawImage(img, borderRealSize, borderRealSize);
 
     return canvas.toDataURL('image/jpeg', 0.8);
 }

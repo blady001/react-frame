@@ -48,7 +48,7 @@ function Editor(props: EditorProps) {
     };
 
     const onDownload = () => {
-        let imgUrl: string = createImageWithBorder(editorState.selectedFrameSize, editorState.selectedColor);
+        let imgUrl: string = createImageWithBorder();
         download(imgUrl, generateFilename('jpeg'));
     }
 
