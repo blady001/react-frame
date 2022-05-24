@@ -7,7 +7,7 @@ export enum ReferenceDimension {
     Height = 'vh'
 }
 
-const SCALE = 0.8;  // TODO: Make it auto calculated on the basis of the image size (smaller the image, lesser the scale multiplier)
+const SCALE = 0.9;  
 
 interface CanvasProps {
     referenceDimension: ReferenceDimension,
@@ -28,12 +28,12 @@ function Canvas(props: CanvasProps) {
     });
 
     const getRenderingSquareStyle = () => ({
-            height: format(SCALE * 100, props.referenceDimension),
-            width: format(SCALE * 100, props.referenceDimension),
-            backgroundColor: 'grey',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+        height: format(SCALE * 100, props.referenceDimension),
+        width: format(SCALE * 100, props.referenceDimension),
+        // backgroundColor: 'grey',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     });
 
     const getImgStyle = () => {
@@ -55,14 +55,14 @@ function Canvas(props: CanvasProps) {
     return (
         <div style={getCanvasStyle()}>
             <div style={getRenderingSquareStyle()}>
-                {/* { props.imageUrl ?? */} 
+                {props.imageUrl !== undefined ?
                     <img
                         id={CANVAS_IMG_ELEMENT_ID}
                         src={props.imageUrl}
                         alt=""
                         style={getImgStyle()}
-                    />
-                {/* } */}
+                    /> : null
+                }
             </div>
         </div>
     );
