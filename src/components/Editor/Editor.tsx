@@ -79,6 +79,7 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
+            {!isOrientationHorizontal() ? <h1>FrameTool</h1> : null}
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
@@ -87,8 +88,14 @@ function Editor(props: EditorProps) {
                     imageUrl={editorState.imageUrl}
                 />
             </div>
-            <div>
-                <input type='file' accept="image/jpeg" onChange={onImageChange} />
+            <div id='editor-params'>
+                {isOrientationHorizontal() ? <h1>FrameTool</h1> : null}
+                {/* <input type='file' accept="image/jpeg" onChange={onImageChange} /> */}
+                <div>
+                    <label htmlFor='fileinput' className="btn">Select image</label>
+                    <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />
+                </div>
+                <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
                 <Slider
                     min={0}
                     max={10}
@@ -96,7 +103,6 @@ function Editor(props: EditorProps) {
                     onChange={onSliderChange}
                     style={{ maxWidth: '50vw', margin: '0 auto' }}
                 />
-                <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
                 <button onClick={onDownload}>Download</button>
             </div>
         </div>

@@ -2,3 +2,16 @@
     display: flex;
     justify-content: center;
 }
+
+#editor-params {
+    text-align: center;
+}
+
+#fileinput {
+    /* visibility: hidden; */
+    display: none;
+}
+
+.react-colorful {
+    margin: auto !important;
+}
