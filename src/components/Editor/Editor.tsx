@@ -6,6 +6,7 @@ import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
 import { produceNewImage } from '../Canvas/CanvasProcessing';
 import { HexColorPicker } from 'react-colorful';
+import initialImage from './../../assets/initial_img.jpeg';
 
 
 interface EditorProps {
@@ -16,16 +17,15 @@ interface EditorState {
     selectedFrameSize: number,  // as percentage of canvas height (size)
     selectedColor: string,
     editorOrientation: Orientation,
-    showColorPicker: boolean,
-    imageUrl?: string
+    imageUrl: string
 }
 
 function Editor(props: EditorProps) {
     const [editorState, setEditorState] = useState<EditorState>({
-        selectedFrameSize: 0,
-        selectedColor: '#ff8c00',
+        selectedFrameSize: 2,
+        selectedColor: '#000000',
         editorOrientation: getDeviceOrientation(),
-        showColorPicker: false,
+        imageUrl: initialImage
     });
 
     const onSliderChange = (value: number | number[]) => {
@@ -78,16 +78,14 @@ function Editor(props: EditorProps) {
     }
 
     return (
-        <div className='container' style={getEditorFlexDirection()}>
+        <div className='flex-container' style={getEditorFlexDirection()}>
             <div>
-                {editorState.imageUrl === undefined ? null :
-                    <Canvas
-                        referenceDimension={getCanvasReferenceDimension()}
-                        borderSize={editorState.selectedFrameSize}
-                        borderColor={editorState.selectedColor}
-                        imageUrl={editorState.imageUrl}
-                    />
-                }
+                <Canvas
+                    referenceDimension={getCanvasReferenceDimension()}
+                    borderSize={editorState.selectedFrameSize}
+                    borderColor={editorState.selectedColor}
+                    imageUrl={editorState.imageUrl}
+                />
             </div>
             <div>
                 <input type='file' accept="image/jpeg" onChange={onImageChange} />

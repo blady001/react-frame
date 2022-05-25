@@ -7,13 +7,13 @@ export enum ReferenceDimension {
     Height = 'vh'
 }
 
-const SCALE = 0.9;  
+const SCALE = 0.9;
 
 interface CanvasProps {
     referenceDimension: ReferenceDimension,
     borderSize: number,
     borderColor: string,
-    imageUrl?: string
+    imageUrl: string
 }
 
 function Canvas(props: CanvasProps) {
@@ -55,14 +55,12 @@ function Canvas(props: CanvasProps) {
     return (
         <div style={getCanvasStyle()}>
             <div style={getRenderingSquareStyle()}>
-                {props.imageUrl !== undefined ?
-                    <img
-                        id={CANVAS_IMG_ELEMENT_ID}
-                        src={props.imageUrl}
-                        alt=""
-                        style={getImgStyle()}
-                    /> : null
-                }
+                <img
+                    id={CANVAS_IMG_ELEMENT_ID}
+                    src={props.imageUrl}
+                    alt=""
+                    style={getImgStyle()}
+                />
             </div>
         </div>
     );
