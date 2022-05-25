@@ -94,7 +94,7 @@ function Editor(props: EditorProps) {
                 }
             </div>
             <div>
-                <input type='file' onChange={onImageChange} />
+                <input type='file' accept="image/jpeg" onChange={onImageChange} />
                 <Slider
                     min={0}
                     max={10}
