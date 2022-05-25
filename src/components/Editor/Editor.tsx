@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
-import ColorPicker from '../ColorPicker/ColorPicker';
 import { produceNewImage } from '../Canvas/CanvasProcessing';
+import { HexColorPicker } from 'react-colorful';
 
 
 interface EditorProps {
@@ -31,10 +31,6 @@ function Editor(props: EditorProps) {
     const onSliderChange = (value: number | number[]) => {
         // console.log('Slider value: ' + value);
         setEditorState({ ...editorState, selectedFrameSize: value as number });
-    };
-
-    const toggleColorPicker = () => {
-        setEditorState({ ...editorState, showColorPicker: !editorState.showColorPicker });
     };
 
     const onColorChange = (value: string) => {
@@ -102,15 +98,8 @@ function Editor(props: EditorProps) {
                     onChange={onSliderChange}
                     style={{ maxWidth: '50vw', margin: '0 auto' }}
                 />
-                <button onClick={toggleColorPicker}>Color</button>
+                <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
                 <button onClick={onDownload}>Download</button>
-                {editorState.showColorPicker ?
-                    <ColorPicker
-                        color={editorState.selectedColor}
-                        onDismiss={toggleColorPicker}
-                        onColorChange={onColorChange}
-                    />
-                    : null}
             </div>
         </div>
     );
