@@ -1,0 +1,17 @@
+.rc-slider-handle {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    opacity: 1;
+}
+
+.rc-slider-handle:hover {
+    border-color: black;
+}
+
+.rc-slider-track {
+    background-color: var(--primary-color);
+}
+
+.rc-slider-rail {
+    background-color: var(--primary-tint);
+}

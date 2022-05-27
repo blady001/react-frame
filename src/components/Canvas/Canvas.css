@@ -1,0 +1,12 @@
+#main-canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--canvas-color);
+}
+
+#rendering-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

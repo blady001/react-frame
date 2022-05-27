@@ -1,5 +1,18 @@
+:root {
+  /* --background-color: #1e1e24; */
+  --background-color: white;
+  --canvas-color: lightgrey;
+  /* --canvas-color: #323238; */
+  /* --text-color: #616161; */
+  --text-color: black;
+  --primary-color: rgb(89, 13, 228);
+  --primary-tint: rgb(212, 194, 245);
+}
+
 .App {
-  text-align: center;
+  /* text-align: center; */
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .App-logo {

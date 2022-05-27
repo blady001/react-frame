@@ -1,3 +1,4 @@
+import './Canvas.css';
 import { format } from "../../modules/formattingUtils";
 
 export const CANVAS_IMG_ELEMENT_ID = 'canvas-img';
@@ -18,22 +19,14 @@ interface CanvasProps {
 
 function Canvas(props: CanvasProps) {
 
-    const getCanvasStyle = () => ({
-        display: 'flex',
-        justifyContent: 'center',
-        'alignItems': 'center',
+    const getCanvasSize = () => ({
         height: format(100, props.referenceDimension),
         width: format(100, props.referenceDimension),
-        backgroundColor: 'lightGray'
     });
 
-    const getRenderingSquareStyle = () => ({
+    const getRenderingSquareSize = () => ({
         height: format(SCALE * 100, props.referenceDimension),
         width: format(SCALE * 100, props.referenceDimension),
-        // backgroundColor: 'grey',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
     });
 
     const getImgStyle = () => {
@@ -49,12 +42,9 @@ function Canvas(props: CanvasProps) {
         };
     };
 
-    // TODO: START WITH displaying image conditionally
-    // TODO: then nice button for download (which prevents double clicking and shows loading)
-    // TODO: Then styling
     return (
-        <div style={getCanvasStyle()}>
-            <div style={getRenderingSquareStyle()}>
+        <div id='main-canvas' style={getCanvasSize()}>
+            <div id='rendering-square' style={getRenderingSquareSize()}>
                 <img
                     id={CANVAS_IMG_ELEMENT_ID}
                     src={props.imageUrl}

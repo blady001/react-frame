@@ -8,8 +8,11 @@
 }
 
 #editor-params {
-    text-align: center;
-    margin: 10px;
+    /* text-align: center; */
+    padding: 20px;
+    /* border-left: 1px solid #09e85e; */
+    /* border-right: 1px solid #09e85e; */ 
+    /* background-color: #1e1e24; */
 }
 
 #editor-params > div {

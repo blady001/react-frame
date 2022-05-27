@@ -1,12 +1,12 @@
 import './Editor.css';
 import Canvas, { ReferenceDimension } from '../Canvas/Canvas';
 import React, { useEffect, useState } from 'react';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { getDeviceOrientation, Orientation } from '../../modules/display';
 import { produceNewImage } from '../Canvas/CanvasProcessing';
 import { HexColorPicker } from 'react-colorful';
 import initialImage from './../../assets/initial_img.jpeg';
+import { SliderWrapper } from '../SliderWrapper/SliderWrapper';
 
 
 interface EditorProps {
@@ -23,7 +23,7 @@ interface EditorState {
 function Editor(props: EditorProps) {
     const [editorState, setEditorState] = useState<EditorState>({
         selectedFrameSize: 2,
-        selectedColor: '#000000',
+        selectedColor: '#590de4',
         editorOrientation: getDeviceOrientation(),
         imageUrl: initialImage
     });
@@ -96,14 +96,18 @@ function Editor(props: EditorProps) {
                     <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />
                 </div>
                 <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
-                <Slider
-                    min={0}
-                    max={10}
-                    defaultValue={editorState.selectedFrameSize}
-                    onChange={onSliderChange}
-                    style={{ maxWidth: '50vw', margin: '0 auto' }}
-                />
-                <button onClick={onDownload}>Download</button>
+                <div>
+                    <label>Border size</label>
+                    <SliderWrapper
+                        min={0}
+                        max={1}
+                        defaultValue={editorState.selectedFrameSize}
+                        onChange={onSliderChange}
+                    />
+                </div>
+                <div>
+                    <button onClick={onDownload}>Download</button>
+                </div>
             </div>
         </div>
     );
