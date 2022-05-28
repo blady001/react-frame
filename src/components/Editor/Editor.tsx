@@ -17,16 +17,17 @@ interface EditorState {
     selectedFrameSize: number,  // as percentage of canvas height (size)
     selectedColor: string,
     editorOrientation: Orientation,
-    imageUrl: string
+    imageUrl: string,
+    isProcessingImage: boolean
 }
 
 function Editor(props: EditorProps) {
     const [editorState, setEditorState] = useState<EditorState>({
         selectedFrameSize: 2,
-        // selectedColor: 'rgb(89, 13, 228)',
-        selectedColor: 'var(--primary-color)',
+        selectedColor: '#590de4',
         editorOrientation: getDeviceOrientation(),
-        imageUrl: initialImage
+        imageUrl: initialImage,
+        isProcessingImage: false
     });
 
     const onSliderChange = (value: number | number[]) => {
@@ -80,7 +81,7 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
-            {!isOrientationHorizontal() ? <h1 id='title' style={{textAlign: 'center'}}>FrameTool</h1> : null}
+            {!isOrientationHorizontal() ? <h1 id='title' style={{ textAlign: 'center' }}>FrameTool</h1> : null}
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
@@ -91,7 +92,6 @@ function Editor(props: EditorProps) {
             </div>
             <div id='editor-params'>
                 {isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
-                {/* <input type='file' accept="image/jpeg" onChange={onImageChange} /> */}
                 <div>
                     <label htmlFor='fileinput' className="button-outline">Change image</label>
                     <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />
@@ -115,7 +115,7 @@ function Editor(props: EditorProps) {
 }
 
 function download(url: string, filename: string) {
-    const link = document.createElement("a");
+    const link: HTMLAnchorElement = document.createElement("a");
     link.href = url;
     link.download = filename;
     link.click();
