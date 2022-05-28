@@ -80,7 +80,7 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
-            {!isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
+            {!isOrientationHorizontal() ? <h1 id='title' style={{textAlign: 'center'}}>FrameTool</h1> : null}
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
