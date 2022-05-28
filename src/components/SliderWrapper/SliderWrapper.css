@@ -5,7 +5,8 @@
 }
 
 .rc-slider-handle:hover {
-    border-color: black;
+    border-color: var(--secondary-color);
+    background-color: var(--secondary-color);
 }
 
 .rc-slider-track {

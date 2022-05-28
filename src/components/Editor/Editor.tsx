@@ -93,7 +93,7 @@ function Editor(props: EditorProps) {
                 {isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
                 {/* <input type='file' accept="image/jpeg" onChange={onImageChange} /> */}
                 <div>
-                    <label htmlFor='fileinput' className="btn">Select image</label>
+                    <label htmlFor='fileinput' className="button-outline">Change image</label>
                     <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />
                 </div>
                 <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
@@ -107,7 +107,7 @@ function Editor(props: EditorProps) {
                     />
                 </div>
                 <div>
-                    <button onClick={onDownload}>Download</button>
+                    <button onClick={onDownload} className='button-solid'>Download</button>
                 </div>
             </div>
         </div>

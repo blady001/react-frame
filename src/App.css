@@ -9,6 +9,7 @@
   --text-color: black;
   --primary-color: rgb(89, 13, 228);
   --primary-tint: rgb(212, 194, 245);
+  --secondary-color: rgb(27, 27, 27);
 }
 
 .App {
