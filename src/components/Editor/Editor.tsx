@@ -23,7 +23,8 @@ interface EditorState {
 function Editor(props: EditorProps) {
     const [editorState, setEditorState] = useState<EditorState>({
         selectedFrameSize: 2,
-        selectedColor: '#590de4',
+        // selectedColor: 'rgb(89, 13, 228)',
+        selectedColor: 'var(--primary-color)',
         editorOrientation: getDeviceOrientation(),
         imageUrl: initialImage
     });
@@ -79,7 +80,7 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
-            {!isOrientationHorizontal() ? <h1>FrameTool</h1> : null}
+            {!isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
@@ -89,7 +90,7 @@ function Editor(props: EditorProps) {
                 />
             </div>
             <div id='editor-params'>
-                {isOrientationHorizontal() ? <h1>FrameTool</h1> : null}
+                {isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
                 {/* <input type='file' accept="image/jpeg" onChange={onImageChange} /> */}
                 <div>
                     <label htmlFor='fileinput' className="btn">Select image</label>

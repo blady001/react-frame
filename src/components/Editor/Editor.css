@@ -23,3 +23,8 @@
     /* visibility: hidden; */
     display: none;
 }
+
+#title {
+    font-family: 'Lobster', cursive;
+    color: var(--primary-color);
+}
