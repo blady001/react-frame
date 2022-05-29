@@ -82,7 +82,13 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
-            {!isOrientationHorizontal() ? <MenuHeader /> : null}
+            <input id='fileinput' type='file' accept='image/jpeg' onChange={onImageChange} />
+            {!isOrientationHorizontal() ?
+                <MenuHeader
+                    inputElementId='fileinput'
+                    onDownload={onDownload}
+                /> : null
+            }
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
@@ -95,7 +101,6 @@ function Editor(props: EditorProps) {
                 {isOrientationHorizontal() ? <SimpleHeader /> : null}
                 <div>
                     <label htmlFor='fileinput' className="button-outline">Change image</label>
-                    <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />
                 </div>
                 <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
                 <div>
