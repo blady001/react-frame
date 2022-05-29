@@ -7,6 +7,7 @@ import { produceNewImage } from '../Canvas/CanvasProcessing';
 import { HexColorPicker } from 'react-colorful';
 import initialImage from './../../assets/initial_img.jpeg';
 import { SliderWrapper } from '../SliderWrapper/SliderWrapper';
+import { MenuHeader, SimpleHeader } from '../Header/Header';
 
 
 interface EditorProps {
@@ -81,7 +82,7 @@ function Editor(props: EditorProps) {
 
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
-            {!isOrientationHorizontal() ? <h1 id='title' style={{ textAlign: 'center' }}>FrameTool</h1> : null}
+            {!isOrientationHorizontal() ? <MenuHeader /> : null}
             <div>
                 <Canvas
                     referenceDimension={getCanvasReferenceDimension()}
@@ -91,7 +92,7 @@ function Editor(props: EditorProps) {
                 />
             </div>
             <div id='editor-params'>
-                {isOrientationHorizontal() ? <h1 id='title'>FrameTool</h1> : null}
+                {isOrientationHorizontal() ? <SimpleHeader /> : null}
                 <div>
                     <label htmlFor='fileinput' className="button-outline">Change image</label>
                     <input id="fileinput" type="file" accept="image/jpeg" onChange={onImageChange} />

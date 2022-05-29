@@ -1,0 +1,19 @@
+.header-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: var(--default-padding);
+    padding-right: var(--default-padding);
+}
+
+.header {
+    font-family: 'Lobster', cursive;
+    color: var(--primary-color)
+}
+
+.menu-header {
+    text-align: center;
+}
+
+.header-wrapper {
+    flex-grow: 1;
+}

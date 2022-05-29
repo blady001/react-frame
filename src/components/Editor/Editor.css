@@ -118,7 +118,7 @@
 
 #editor-params {
     /* text-align: center; */
-    padding: 20px;
+    padding: var(--default-padding);
     /* border-left: 1px solid #09e85e; */
     /* border-right: 1px solid #09e85e; */ 
     /* background-color: #1e1e24; */
@@ -131,9 +131,4 @@
 #fileinput {
     /* visibility: hidden; */
     display: none;
-}
-
-#title {
-    font-family: 'Lobster', cursive;
-    color: var(--primary-color);
 }
