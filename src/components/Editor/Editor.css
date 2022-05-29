@@ -1,11 +1,22 @@
 .flex-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .react-colorful {
-    margin: auto !important;
+  margin: auto !important;
 }
+
+.responsive-picker {
+  height: 100%;
+}
+
+.responsive-picker .react-colorful {
+  width: auto;
+  /* height: auto; */
+  height: 100%;
+}
+
 /* CSS */
 .button-solid {
   appearance: none;
@@ -83,6 +94,7 @@
   vertical-align: middle;
   white-space: nowrap;
   word-wrap: break-word;
+  text-align: center;
 }
 
 .button-outline:hover {
@@ -116,20 +128,31 @@
   display: none;
 }
 
+.full-available-width {
+  width: 100%;
+}
+
 #editor-params {
-    padding: var(--default-padding);
+  padding: var(--default-padding);
+}
+
+#color-picker-sheet {
+  padding-left: var(--default-padding);
+  padding-right: var(--default-padding);
+  height: calc(100% - 40px - var(--default-padding));
+  text-align: center;
 }
 
 .editor-section {
   margin-bottom: 10px;
 }
 
-.editor-section > label {
+.editor-section>label {
   display: block;
   margin-bottom: 5px;
 }
 
 #fileinput {
-    /* visibility: hidden; */
-    display: none;
+  /* visibility: hidden; */
+  display: none;
 }

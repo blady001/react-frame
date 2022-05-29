@@ -8,6 +8,7 @@ import { HexColorPicker } from 'react-colorful';
 import initialImage from './../../assets/initial_img.jpeg';
 import { SliderWrapper } from '../SliderWrapper/SliderWrapper';
 import { MenuHeader, SimpleHeader } from '../Header/Header';
+import Sheet from 'react-modal-sheet';
 
 
 interface EditorProps {
@@ -19,7 +20,8 @@ interface EditorState {
     selectedColor: string,
     editorOrientation: Orientation,
     imageUrl: string,
-    isProcessingImage: boolean
+    isProcessingImage: boolean,
+    colorPickerSheetOpened: boolean
 }
 
 function Editor(props: EditorProps) {
@@ -28,7 +30,8 @@ function Editor(props: EditorProps) {
         selectedColor: '#590de4',
         editorOrientation: getDeviceOrientation(),
         imageUrl: initialImage,
-        isProcessingImage: false
+        isProcessingImage: false,
+        colorPickerSheetOpened: false
     });
 
     const onSliderChange = (value: number | number[]) => {
@@ -80,6 +83,15 @@ function Editor(props: EditorProps) {
         }
     }
 
+    const setColorPickerSheetOpened = (value: boolean) => {
+        if (value && !isOrientationHorizontal())
+            setEditorState({ ...editorState, colorPickerSheetOpened: true })
+        else if (editorState.colorPickerSheetOpened)
+            setEditorState({ ...editorState, colorPickerSheetOpened: false })
+    }
+
+    const getColorPicker = () => <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />;
+
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
             <input id='fileinput' type='file' accept='image/jpeg' onChange={onImageChange} />
@@ -110,14 +122,41 @@ function Editor(props: EditorProps) {
                 </div>
                 <div className='editor-section'>
                     <label>Color</label>
-                    <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
+                    {isOrientationHorizontal() ? getColorPicker() :
+                        <button onClick={() => setColorPickerSheetOpened(true)}>Select</button>
+                    }
                 </div>
                 {isOrientationHorizontal() ?
                     <div className='editor-section'>
-                        <label htmlFor='fileinput' className="button-outline">Change image</label>
-                        <button onClick={onDownload} className='button-solid'>Download</button>
+                        <label htmlFor='fileinput' className="button-outline full-available-width">Change image</label>
+                        <button onClick={onDownload} className='button-solid full-available-width'>Download</button>
                     </div> : null
                 }
+                <div className='editor-section'>
+                    <Sheet
+                        isOpen={editorState.colorPickerSheetOpened}
+                        onClose={() => setColorPickerSheetOpened(false)}
+                        disableDrag={true}
+                        snapPoints={[0.5]}>
+                        {/* @ts-ignore */}
+                        <Sheet.Container>
+                            {/* @ts-ignore */}
+                            <Sheet.Header />
+                            {/* @ts-ignore */}
+                            <Sheet.Content>
+                                <div id='color-picker-sheet'>
+                                    <button onClick={() => setColorPickerSheetOpened(false)} className='button-outline'>Close</button>
+                                    <div className='responsive-picker'>
+                                        {getColorPicker()}
+                                    </div>
+                                </div>
+                            </Sheet.Content>
+                        </Sheet.Container>
+
+                        {/* @ts-ignore */}
+                        <Sheet.Backdrop />
+                    </Sheet>
+                </div>
             </div>
         </div>
     );
