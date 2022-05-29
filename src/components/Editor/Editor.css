@@ -144,12 +144,16 @@
 }
 
 .editor-section {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .editor-section>label {
   display: block;
   margin-bottom: 5px;
+}
+
+.editor-buttons {
+  margin-top: 50px;
 }
 
 #fileinput {

@@ -127,7 +127,7 @@ function Editor(props: EditorProps) {
                     }
                 </div>
                 {isOrientationHorizontal() ?
-                    <div className='editor-section'>
+                    <div className='editor-section editor-buttons'>
                         <label htmlFor='fileinput' className="button-outline full-available-width">Change image</label>
                         <button onClick={onDownload} className='button-solid full-available-width'>Download</button>
                     </div> : null
@@ -140,8 +140,6 @@ function Editor(props: EditorProps) {
                         snapPoints={[0.5]}>
                         {/* @ts-ignore */}
                         <Sheet.Container>
-                            {/* @ts-ignore */}
-                            <Sheet.Header />
                             {/* @ts-ignore */}
                             <Sheet.Content>
                                 <div id='color-picker-sheet'>
