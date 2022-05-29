@@ -99,11 +99,7 @@ function Editor(props: EditorProps) {
             </div>
             <div id='editor-params'>
                 {isOrientationHorizontal() ? <SimpleHeader /> : null}
-                <div>
-                    <label htmlFor='fileinput' className="button-outline">Change image</label>
-                </div>
-                <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
-                <div>
+                <div className='editor-section'>
                     <label>Border size</label>
                     <SliderWrapper
                         min={0}
@@ -112,9 +108,16 @@ function Editor(props: EditorProps) {
                         onChange={onSliderChange}
                     />
                 </div>
-                <div>
-                    <button onClick={onDownload} className='button-solid'>Download</button>
+                <div className='editor-section'>
+                    <label>Color</label>
+                    <HexColorPicker color={editorState.selectedColor} onChange={onColorChange} />
                 </div>
+                {isOrientationHorizontal() ?
+                    <div className='editor-section'>
+                        <label htmlFor='fileinput' className="button-outline">Change image</label>
+                        <button onClick={onDownload} className='button-solid'>Download</button>
+                    </div> : null
+                }
             </div>
         </div>
     );

@@ -117,15 +117,16 @@
 }
 
 #editor-params {
-    /* text-align: center; */
     padding: var(--default-padding);
-    /* border-left: 1px solid #09e85e; */
-    /* border-right: 1px solid #09e85e; */ 
-    /* background-color: #1e1e24; */
 }
 
-#editor-params > div {
-    margin-top: 10px !important;
+.editor-section {
+  margin-bottom: 10px;
+}
+
+.editor-section > label {
+  display: block;
+  margin-bottom: 5px;
 }
 
 #fileinput {
