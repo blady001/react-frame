@@ -143,7 +143,11 @@ function Editor(props: EditorProps) {
                             {/* @ts-ignore */}
                             <Sheet.Content>
                                 <div id='color-picker-sheet'>
-                                    <button onClick={() => setColorPickerSheetOpened(false)} className='button-outline'>Close</button>
+                                    <div id='picker-header'>
+                                        {/* <span>Cancel</span> */}
+                                        <span className='flex-big'/>
+                                        <span className='button-text' onClick={() => setColorPickerSheetOpened(false)}>OK</span>
+                                    </div>
                                     <div className='responsive-picker'>
                                         {getColorPicker()}
                                     </div>
