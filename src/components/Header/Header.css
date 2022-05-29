@@ -3,6 +3,7 @@
     flex-direction: row;
     padding-left: var(--default-padding);
     padding-right: var(--default-padding);
+    align-items: center;
 }
 
 .header {
@@ -16,4 +17,13 @@
 
 .header-wrapper {
     flex-grow: 1;
+}
+
+.material-symbols-outlined {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.material-symbols-outlined:hover {
+    color: var(--secondary-color);
 }

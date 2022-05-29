@@ -131,6 +131,7 @@
 .button-text {
   color: var(--primary-color);
   font-weight: bold;
+  cursor: pointer;
 }
 
 .full-available-width {
@@ -174,6 +175,14 @@
 
 .editor-buttons {
   margin-top: 50px;
+}
+
+.circle {
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--canvas-color);
+  display: inline-block;
 }
 
 #fileinput {

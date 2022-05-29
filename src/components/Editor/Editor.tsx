@@ -123,7 +123,8 @@ function Editor(props: EditorProps) {
                 <div className='editor-section'>
                     <label>Color</label>
                     {isOrientationHorizontal() ? getColorPicker() :
-                        <button onClick={() => setColorPickerSheetOpened(true)}>Select</button>
+                        <span className='circle' onClick={() => setColorPickerSheetOpened(true)} style={{ background: editorState.selectedColor }} />
+                        // <button onClick={() => setColorPickerSheetOpened(true)}>Select</button>
                     }
                 </div>
                 {isOrientationHorizontal() ?
@@ -145,7 +146,7 @@ function Editor(props: EditorProps) {
                                 <div id='color-picker-sheet'>
                                     <div id='picker-header'>
                                         {/* <span>Cancel</span> */}
-                                        <span className='flex-big'/>
+                                        <span className='flex-big' />
                                         <span className='button-text' onClick={() => setColorPickerSheetOpened(false)}>OK</span>
                                     </div>
                                     <div className='responsive-picker'>
