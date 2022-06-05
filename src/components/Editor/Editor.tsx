@@ -9,6 +9,7 @@ import initialImage from './../../assets/initial_img.jpeg';
 import { SliderWrapper } from '../SliderWrapper/SliderWrapper';
 import { MenuHeader, SimpleHeader } from '../Header/Header';
 import Sheet from 'react-modal-sheet';
+import { Spinner } from '../Spinner/Spinner';
 
 
 interface EditorProps {
@@ -49,9 +50,17 @@ function Editor(props: EditorProps) {
         setEditorState({ ...editorState, imageUrl: imageUrl });
     };
 
+    // const onDownload = () => {
+    //     let imgUrl: string = produceNewImage();
+    //     download(imgUrl, generateFilename('jpeg'));
+    // }
+
     const onDownload = () => {
-        let imgUrl: string = produceNewImage();
-        download(imgUrl, generateFilename('jpeg'));
+        setEditorState({ ...editorState, isProcessingImage: true });
+
+        setTimeout(() => {
+            setEditorState({ ...editorState, isProcessingImage: false });
+        }, 2000);
     }
 
     // @ts-ignore
@@ -95,11 +104,11 @@ function Editor(props: EditorProps) {
     return (
         <div className='flex-container' style={getEditorFlexDirection()}>
             <input id='fileinput' type='file' accept='image/jpeg' onChange={onImageChange} />
-            {!isOrientationHorizontal() ?
+            {!isOrientationHorizontal() &&
                 <MenuHeader
                     inputElementId='fileinput'
                     onDownload={onDownload}
-                /> : null
+                />
             }
             <div>
                 <Canvas
@@ -110,7 +119,7 @@ function Editor(props: EditorProps) {
                 />
             </div>
             <div id='editor-params'>
-                {isOrientationHorizontal() ? <SimpleHeader /> : null}
+                {isOrientationHorizontal() && <SimpleHeader />}
                 <div className='editor-section'>
                     <label>Border size</label>
                     <SliderWrapper
@@ -127,11 +136,13 @@ function Editor(props: EditorProps) {
                         // <button onClick={() => setColorPickerSheetOpened(true)}>Select</button>
                     }
                 </div>
-                {isOrientationHorizontal() ?
+                {isOrientationHorizontal() &&
                     <div className='editor-section editor-buttons'>
                         <label htmlFor='fileinput' className="button-outline full-available-width">Change image</label>
-                        <button onClick={onDownload} className='button-solid full-available-width'>Download</button>
-                    </div> : null
+                        <button onClick={onDownload} className='button-solid full-available-width' disabled={editorState.isProcessingImage}>
+                            {!editorState.isProcessingImage ? "Download" : <Spinner />}
+                        </button>
+                    </div>
                 }
                 <div className='editor-section'>
                     <Sheet
